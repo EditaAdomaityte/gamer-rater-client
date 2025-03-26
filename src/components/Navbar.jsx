@@ -8,9 +8,6 @@ export const NavBar = () => {
              <li className="navbar__item pl-10">
                 <NavLink className="text-left underline text-blue-600 hover:text-purple-700" to={"/allgames"}>All Games</NavLink>
             </li>
-            <li className="navbar__item pl-10">
-                <NavLink className="text-left underline text-blue-600 hover:text-purple-700" to={"/create"}>Create Game Entry</NavLink>
-            </li>
             <li className="navbar__item">
                 <NavLink className="text-left underline text-blue-600 hover:text-purple-700" to={"/pictures"}>Pictures</NavLink>
             </li>
