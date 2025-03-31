@@ -30,10 +30,10 @@ export const GameForm = () => {
       title: game.title,
       description: game.description,
       designer: game.designer,
-      year_released: game.year,
-      number_of_players: game.players,
-      play_time: game.time,
-      recommended_age: game.age,
+      year_released: game.year_released,
+      number_of_players: game.number_of_players,
+      play_time: game.game_time,
+      recommended_age: game.recommended_age,
       categories:game.categories
     };
     createGame(newGame).then(() => {
@@ -73,6 +73,7 @@ export const GameForm = () => {
                 placeholder="Game Title"
                 required
                 onChange={(event) => {
+                    const copy={...game}
                     copy.description = event.target.value;
                     setGame(copy);
                 }}
@@ -88,6 +89,7 @@ export const GameForm = () => {
                 placeholder="Game Title"
                 required
                 onChange={(event) => {
+                    const copy={...game}
                     copy.designer = event.target.value;
                     setGame(copy);
                 }}
@@ -103,6 +105,7 @@ export const GameForm = () => {
                 placeholder="Game Title"
                 required
                 onChange={(event) => {
+                    const copy={...game}
                     copy.year_released = event.target.value;
                     setGame(copy);
                 }}
@@ -118,6 +121,7 @@ export const GameForm = () => {
                 placeholder="Game Title"
                 required
                 onChange={(event) => {
+                    const copy={...game}
                     copy.number_of_players = event.target.value;
                     setGame(copy);
                 }}
@@ -133,6 +137,7 @@ export const GameForm = () => {
                 placeholder="Game Title"
                 required
                 onChange={(event) => {
+                    const copy={...game}
                     copy.play_time = event.target.value;
                     setGame(copy);
                 }}
@@ -148,6 +153,7 @@ export const GameForm = () => {
                 placeholder="Game Title"
                 required
                 onChange={(event) => {
+                    const copy={...game}
                     copy.recommended_age = event.target.value;
                     setGame(copy);
                 }}
@@ -157,11 +163,14 @@ export const GameForm = () => {
           <fieldset>
             <label>Category:</label>
             <select
-              value={categories}
+              id="categories"
+              name="categories"
               onChange={(event) =>{
-                copy.categories= [event.target.value]
+                const copy={...game}
+                copy.categories= [parseInt(event.target.value)]
                 setGame(copy);
             }}
+            defaultValue={0}
             >
               <option value="Select a Category">Select Category</option>
               {categories.map((category) => (

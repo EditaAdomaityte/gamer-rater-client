@@ -1,11 +1,16 @@
-import { useState } from "react"
-import { useParams } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
+import { getGame } from "../../services/gameservices"
+import { createReview } from "../../services/reviewservices"
 
 export const ReviewForm=()=>{
     const[ game, setGame]=useState({})
-    const[ rating, setRating]=useState(0)
-    const[ comment, setComment]=useState({})
+    const[review,setReview]=useState({
+        rating:0,
+        comment:""
+    })
     const { gameId } = useParams()
+    const navigate = useNavigate();
 
     useEffect(()=>{
             getGame(Number(gameId)).then((data) => {
@@ -17,11 +22,15 @@ export const ReviewForm=()=>{
         event.preventDefault()
         
         const newReview={
-            rating: parseInt(rating),
-            comment: comment,
-            game_id:parseInt(gameId)
+            rating: parseInt(review.rating),
+            comment: review.comment,
+            game:parseInt(gameId)
 
         }
+        createReview(newReview).then(() => {
+              navigate(`/allgames/${game.id}`);
+              console.log(newReview)
+            });
     }
     
 
@@ -37,8 +46,9 @@ export const ReviewForm=()=>{
                     className="form-control"
                     placeholder="Game Rating 1-10"
                     required onChange={(event)=>{
-                        const newRating=event.target.value;
-                        setRating(newRating);
+                        const copy={...review}
+                    copy.rating =event.target.value
+                    setReview(copy)
                     }}/>
             </div>
         </fieldset>
@@ -50,11 +60,19 @@ export const ReviewForm=()=>{
                     className="form-control"
                     placeholder="Game Comment"
                     required onChange={(event)=>{
-                        const newComment=event.target.value;
-                        setComment(newComment);
+                        const copy={...review}
+                        copy.comment =event.target.value
+                    setReview(copy)
                     }}/>
             </div>
         </fieldset>
+        <fieldset>
+            <div className="form-group">
+              <button className="form-btn btn-info" onClick={handleSave}>
+                Submit Review
+              </button>
+            </div>
+          </fieldset>
     </form>
     </>}
 }
